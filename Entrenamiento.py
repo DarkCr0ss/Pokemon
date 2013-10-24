@@ -59,11 +59,9 @@ while True:
 	if stats[ev] == 252:
 		print "\"%s\" ya esta al maximo" % (ev)
 		ev = elegir()
-	
 	elif en + stats[ev] > 252:
 		print comparar(stats[ev])
 		en = entrenamiento()
-	
 	elif evs <= 0:
 		resp = raw_input("desea entrenar otro pokemon?[S/n] ").lower()
 		if resp == "si" or resp == "s":
@@ -72,31 +70,23 @@ while True:
 				stats[x] = 0
 			en = entrenamiento()
 			ev = elegir()
-
 		elif resp == "no" or resp == "n":
 			break
-
 	else:
 		x = raw_input(":: ").lower()
-		
 		if x == "x":
 			stats[ev] += en * 2
 			evs -= en * 2
 			print mostrar(ev,stats[ev],evs)
-		
 		elif x == "s":
 			break
-		
 		elif x == "e":
 			ev = elegir()
-		
 		elif x == "c":
 			en = entrenamiento()
-		
 		elif x == "v":
 			for x in stats:
 				print "%s : %s" % (x,stats[x])
-		
 		else:
 			stats[ev] += en
 			evs -= en
