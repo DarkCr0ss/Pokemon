@@ -4,11 +4,11 @@ en = 0
 nombre = ""
 
 stats = {"ps" : 0, \
-		 "atq" : 0, \
-		 "def" : 0, \
-		 "atq sp" : 0, \
-		 "def sp" : 0, \
-	 	 "vel" : 0}
+	 "atq" : 0, \
+	 "def" : 0, \
+	 "atq sp" : 0, \
+	 "def sp" : 0, \
+	 "vel" : 0}
 
 def entrenamiento():
 	res = ""
