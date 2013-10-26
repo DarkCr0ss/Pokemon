@@ -61,7 +61,7 @@ while True:
 	if res == "s" or res == "si":
 		while True:
 			try:
-				x = raw_input("introdusca el nombre del archivo: ")
+				x = raw_input("introdusca el nombre del archivo: ").lower()
 				f = open("%s.csv" % (x))
 			except Exception:
 				print "%s esta mal escrito o no exite" % (x)
