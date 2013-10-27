@@ -1,3 +1,4 @@
+#!/usr/bin/python env
 import csv,os
 evs = 510
 en = 0
@@ -11,6 +12,7 @@ stats = {"ps" : 0, \
 	 "vel" : 0}
 
 def entrenamiento():
+	"""sirve para elegir el tipo de entrenamiento que se va a usar"""
 	res = ""
 	while res == "":
 		print "elige un tipo de entrenamiento:"
@@ -24,6 +26,7 @@ def entrenamiento():
 	return res
 
 def comparar(x):
+	"""se encarga de avisar si se va a pasar de los evs deseados"""
 	if x + 4 == 252:
 		return "cambie al entrenamiento de 4 puntos"
 	elif x + 8 == 252:
@@ -32,6 +35,7 @@ def comparar(x):
 		return "cambie al entrenamiento de 12 puntos"
 
 def elegir(param = stats):
+	"""sirve para elegir que paramentro se a entrenar"""
 	x = ""
 	while x not in param.keys():
 		print "que desea entrenar?"
@@ -43,23 +47,25 @@ def elegir(param = stats):
 			print "\"%s\" no es una opcion" % (x)
 
 def mostrar(x,y,z):
+	"""muestra en pantalla el progreso del entrenamiento"""
 	if z <= 0:
 		return "%s : %d \t\t\t 0 ev's restantes" % (x,y)
 	else:
 		return "%s : %d \t\t\t %d ev's restantes" % (x,y,z)
 
 def guardar(n,s = stats):
+	"""sirve para guardar el progreso"""
 	x = open("save/%s.csv" % (n),"w")
 	for n in s:
 		x.write("%s,%d\n" % (n,s[n]))
 	x.close()
 try:			
 	try:
-		os.mkdir("save")
+		os.mkdir("save")   #trata de crear una carpeta de nombre save
 	except OSError:
-		pass
+		pass   #en caso de que exista el directorio save pasa a la siguiente linea
 
-	if os.listdir("save") != []:
+	if os.listdir("save") != []:   #verifica si no se a guardado nada en la carpeta save
 		while True:
 			res = raw_input("desea reanudar un entrenamiento?[S/n] ").lower()
 			if res == "s" or res == "si":
@@ -83,6 +89,7 @@ try:
 						for n,v in f_csv:
 							stats[n] = int(v)
 						f.close()
+						nombre = x
 						break
 				break
 			elif res == "n" or res == "no":
@@ -98,27 +105,31 @@ try:
 
 	while True:
 		
-		if stats[ev] == 252:
+		if stats[ev] == 252:   #verifica si ya esta entrenado al maximo
 			print "\"%s\" ya esta al maximo" % (ev)
 			ev = elegir()
+			en = entrenamiento()
+
 		
-		elif en + stats[ev] > 252:
+		elif en + stats[ev] > 252:   #te advierte si vas a pasarte de el maximo de evs por estadistica
 			print comparar(stats[ev])
 			en = entrenamiento()
 		
-		elif evs <= 0:
+		elif evs <= 0:   #da la opcion de entrenar otro pokemon si ya terminastes de entrenar
 			resp = raw_input("desea entrenar otro pokemon?[S/n] ").lower()
 			if resp == "si" or resp == "s":
 				evs = 510
 				for x in stats.keys():
 					stats[x] = 0
-				en = entrenamiento()
+				nombre = ""
 				ev = elegir()
-
+				en = entrenamiento()
 			elif resp == "no" or resp == "n":
 				break
 
 		else:
+			if en > evs:
+				en = evs
 			x = raw_input(":: ").lower()
 			
 			if x == "x":
@@ -153,7 +164,7 @@ try:
 				evs -= en
 				print mostrar(ev,stats[ev],evs)
 
-	print "\ngracias por usar este programa"
+	print "gracias por usar este programa"
 except KeyboardInterrupt:
 	print "\ngracias por usar este programa"
 except EOFError:
